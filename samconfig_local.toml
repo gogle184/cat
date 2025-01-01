@@ -1,0 +1,17 @@
+version = 0.1
+
+[default.global.parameters]
+region = "ap-northeast-1"
+
+[default.build.parameters]
+use_container = true
+
+[default.local_start_api.parameters]
+env_vars = "env.json"
+
+[default.deploy.parameters]
+stack_name = "cat-gpt-develop"
+resolve_s3 = true
+s3_prefix = "cat-gpt-develop"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

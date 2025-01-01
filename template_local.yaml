@@ -1,0 +1,83 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  cat-gpt-develop
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  DevSlackBotFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/index.ts
+    Properties:
+      FunctionName: cat-gpt-develop
+      Description: 【開発用】ChatGPTを利用したSlackBotアプリです
+      CodeUri: .
+      Handler: dist/index.handler
+      Runtime: nodejs22.x
+      Timeout: 60
+      MemorySize: 512
+      # FunctionUrlConfig:
+      #   AuthType: NONE
+      #   InvokeMode: BUFFERED
+      #   Cors:
+      #     AllowOrigins:
+      #       - '*'
+      #     AllowMethods:
+      #       - POST
+      #     AllowCredentials: false
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /slack/events
+            Method: POST
+      Environment:
+        Variables:
+          parameterStoreName: cat-gpt-develop
+          apiType: openai
+          botName: しらす
+          openaiModel: gpt-4o
+      PackageType: Zip
+      Role: !GetAtt Role.Arn
+
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: cat-gpt-develop-Role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+
+      Policies:
+        - PolicyName: cat-gpt-develop-policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                Resource: ***
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                Resource: arn:aws:logs:ap-northeast-1:*:*
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - >-
+                    ***

@@ -1,0 +1,35 @@
+{
+	"name": "catgpt",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"init": "cp samconfig_local.toml samconfig.toml && cp template_local.yaml template.yaml",
+		"build": "node esbuild.config.js",
+		"build:local": "sam build",
+		"format": "npx @biomejs/biome format",
+		"lint": "npx @biomejs/biome lint",
+		"check": "npx @biomejs/biome check",
+		"fix": "npx @biomejs/biome check --write"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eisan-system/CatGPT.git"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/aws-lambda": "^8.10.146",
+		"@types/node": "^22.10.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.7.2"
+	},
+	"dependencies": {
+		"@aws-sdk/client-ssm": "^3.713.0",
+		"@slack/bolt": "^4.1.1",
+		"@slack/types": "^2.14.0",
+		"dotenv": "^16.4.7",
+		"esbuild": "^0.24.0",
+		"openai": "^4.76.3",
+		"zod": "^3.24.1"
+	}
+}

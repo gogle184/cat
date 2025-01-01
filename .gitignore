@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.build
+env.json
+.aws-sam
+samconfig.toml
+template.yaml
