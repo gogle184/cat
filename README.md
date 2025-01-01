@@ -1,5 +1,7 @@
 # CatGPT
 
+![demo](https://github.com/user-attachments/assets/49fb85a4-59c1-4565-a442-70fd3610e76e)
+
 ## 12/9更新
 以下参考
 https://go-tech.blog/nodejs/typescript-env/
